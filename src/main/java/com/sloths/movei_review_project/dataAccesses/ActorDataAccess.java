@@ -10,13 +10,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ActorDataAccess extends JpaRepository<Actor, Integer> {
+public interface ActorDataAccess extends JpaRepository<Actor, Long> {
 
     @Query(value = "select * from actors as a where a.id=:id", nativeQuery = true)
-    Actor findActorById(@Param("id") int id);
+    Actor findActorById(@Param("id") long id);
 
     @Query(value = "select * from actors as a where a.full_name=:fullName", nativeQuery = true)
     List<Actor> findActorsByFullName(@Param("fullName") String fullName);
 
-    Boolean existsById(int id);
+    Boolean existsById(long id);
 }

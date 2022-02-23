@@ -44,15 +44,15 @@ public class ActorManager {
         return new CustomResponseEntitySuccess<>(actor, String.format("the actor [%s] is added successfully", actor));
     }
 
-    public Actor getActorById(int id) {
+    public Actor getActorById(long id) {
         return actorDataAccess.getById(id);
     }
 
-    public Boolean isExist(int id) {
+    public Boolean isExist(long id) {
         return actorDataAccess.existsById(id);
     }
 
-    public CustomResponseEntity findActorById(int id) {
+    public CustomResponseEntity findActorById(long id) {
         CustomResponseEntitySuccess<Actor> responseEntity = new CustomResponseEntitySuccess<>(actorDataAccess.findActorById(id), String.format("the actor whose id is [%s] is found", id));
         if(responseEntity.getData() != null) {
             System.out.println(responseEntity.getData().getMovies().size());
@@ -75,7 +75,7 @@ public class ActorManager {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Actor> actorQuery = criteriaBuilder.createQuery(Actor.class);
         Root<Actor> root = actorQuery.from(Actor.class);
-        actorQuery.select(root); //in this example we have only one root, so this statement is unneeded
+        actorQuery.select(root); //in this example we have only one root, so this statement is unnecessary
         actorQuery.where(criteriaBuilder.equal(root.get("fullName"), fullName));
         return session.createQuery(actorQuery).getResultList();
     }
@@ -85,7 +85,7 @@ public class ActorManager {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Actor> actorQuery = criteriaBuilder.createQuery(Actor.class);
         Root<Actor> root = actorQuery.from(Actor.class);
-        actorQuery.select(root); //in this example we have only one root, so this statement is unneeded
+        actorQuery.select(root); //in this example we have only one root, so this statement is unnecessary
         actorQuery.where(criteriaBuilder.equal(root.get("movies").get("name"), movieName));
         List<Actor> resultList = session.createQuery(actorQuery).getResultList();
         return resultList.stream().map(ActorDTO::new).collect(Collectors.toList());

@@ -8,7 +8,7 @@ import java.util.Date;
 public class ActorDTO {
 
     @Getter
-    private final int id;
+    private final long id;
 
     @Getter
     private final String fullName;

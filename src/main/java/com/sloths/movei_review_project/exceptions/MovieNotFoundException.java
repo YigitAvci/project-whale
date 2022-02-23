@@ -4,7 +4,7 @@ import javax.persistence.EntityNotFoundException;
 
 public class MovieNotFoundException extends EntityNotFoundException {
 
-    public MovieNotFoundException(int id) {
+    public MovieNotFoundException(long id) {
         super(String.format("there is not such a movie whose id: [%d]", id));
     }
 }
