@@ -1,4 +1,4 @@
-package com.sloths.movei_review_project.auth.config;
+package com.sloths.movei_review_project.auth.configs;
 
 import com.sloths.movei_review_project.auth.services.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
