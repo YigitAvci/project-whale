@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //the order of this chain is important
         http
-                .authorizeRequests().antMatchers(HttpMethod.POST, "/users/addUser").permitAll()//the parameters that are passed into antMatchers method will be allowed
+                .authorizeRequests().antMatchers(HttpMethod.POST, "/users/addUser").permitAll() //the parameters that are passed into antMatchers method will be allowed
                 .anyRequest().authenticated() //every request except ones that include "/" and "home" must be authenticated
                 .and()
                 .formLogin() //form login will be used to authenticate the users and "/login" will be the login page

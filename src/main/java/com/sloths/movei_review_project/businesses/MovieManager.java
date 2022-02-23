@@ -11,7 +11,6 @@ import com.sloths.movei_review_project.helpers.responseHelpers.CustomResponseEnt
 import com.sloths.movei_review_project.helpers.responseHelpers.CustomResponseEntitySuccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class MovieManager {
         this.actorManager = actorManager;
     }
 
-    public CustomResponseEntity getById(int id) {
+    public CustomResponseEntity getById(long id) {
         Movie movieToBeGet = movieDataAccess.getById(id);
         if(movieToBeGet.getId() == id) {
             return new CustomResponseEntitySuccess<>(movieDataAccess.getById(id));
@@ -42,7 +41,7 @@ public class MovieManager {
         return new CustomResponseEntitySuccess<>(movieDataAccess.findAll(), "List of all the movies");
     }
 
-    public CustomResponseEntity deleteById(int id) {
+    public CustomResponseEntity deleteById(long id) {
         try {
             Movie movieToBeDeleted = movieDataAccess.getById(id);
             movieDataAccess.deleteById(id);
@@ -91,7 +90,7 @@ public class MovieManager {
     }
 
     public CustomResponseEntity update(Movie movie) {
-        int movieId = movie.getId();
+        long movieId = movie.getId();
         if(movieId > 0) {
             try {
                 Movie movieToBeUpdate = movieDataAccess.getById(movieId);

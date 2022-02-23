@@ -7,7 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 public class MovieDTO {
-    private int id;
+
+    private long id;
     @Getter
     @Setter
     private String name;

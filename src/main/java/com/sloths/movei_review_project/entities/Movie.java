@@ -22,7 +22,7 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    private int id;
+    private long id;
 
     @NotBlank(message = "name field for movie is mandatory")
     @Column(name = "name") //This @Column annotation is optional. Without this annotation, jpa will create the table using name of variable for related column
@@ -48,7 +48,7 @@ public class Movie {
     @Setter
     private List<Actor> cast;
 
-    public Movie(int id, String name, Date releaseDate, double rate) {
+    public Movie(long id, String name, Date releaseDate, double rate) {
         this.id = id;
         this.name = name;
         this.releaseDate = releaseDate;
