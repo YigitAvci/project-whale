@@ -13,38 +13,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-    private UserDataAccess userDataAccess;
+    private final UserDataAccess userDataAccess;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public MyUserDetailsService(UserDataAccess userDataAccess) {
+    public MyUserDetailsService(UserDataAccess userDataAccess, BCryptPasswordEncoder passwordEncoder) {
         this.userDataAccess = userDataAccess;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if(username != null && !username.isEmpty() && !username.isBlank()) {
             User user = userDataAccess.findByUsername(username);
-            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+            user.setPassword(user.getPassword());
             return new MyUserDetails(user);
         }
         return null;
     }
 
-    /*
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDataAccess.findByUsername(username);
-        org.springframework.security.core.userdetails.User.UserBuilder builder;
-        if (user != null) {
-            builder = org.springframework.security.core.userdetails.User.withUsername(username);
-            builder.password(new BCryptPasswordEncoder().encode(user.getPassword()));
-            builder.roles(user.getRole());
-        } else {
-            throw new UsernameNotFoundException("User not found.");
-        }
-
-        return builder.build();
-    }
-
-     */
 }

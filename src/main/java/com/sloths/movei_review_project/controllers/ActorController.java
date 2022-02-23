@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/actors")
 public class ActorController {
 
-    private ActorManager actorManager;
+    private final ActorManager actorManager;
 
     @Autowired
     public ActorController(ActorManager actorManager) {

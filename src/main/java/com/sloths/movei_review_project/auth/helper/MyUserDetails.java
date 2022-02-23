@@ -3,9 +3,13 @@ package com.sloths.movei_review_project.auth.helper;
 import com.sloths.movei_review_project.auth.entities.User;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @NoArgsConstructor
 public class MyUserDetails implements UserDetails {
@@ -18,13 +22,9 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //List<GrantedAuthority> authorityList = new ArrayList<>();
-        //authorityList.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
-        return null;
-    }
-
-    public String getRole() {
-        return user.getRole();
+        List<GrantedAuthority> authorityList = new ArrayList<>();
+        authorityList.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
+        return authorityList;
     }
 
     @Override

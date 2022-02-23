@@ -9,7 +9,6 @@ import com.sloths.movei_review_project.helpers.responseHelpers.CustomResponseEnt
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class ActorManager {
 
-    private ActorDataAccess actorDataAccess;
+    private final ActorDataAccess actorDataAccess;
 
     @PersistenceContext
     private EntityManager entityManager;
