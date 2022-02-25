@@ -1,6 +1,6 @@
 package com.sloths.movei_review_project.controllers;
 
-import com.sloths.movei_review_project.businesses.ActorManager;
+import com.sloths.movei_review_project.services.ActorService;
 import com.sloths.movei_review_project.entities.Actor;
 import com.sloths.movei_review_project.entities.ActorDTO;
 import com.sloths.movei_review_project.helpers.responseHelpers.CustomResponseEntity;
@@ -13,10 +13,10 @@ import java.util.List;
 @RequestMapping("/actors")
 public class ActorController {
 
-    private final ActorManager actorManager;
+    private final ActorService actorManager;
 
     @Autowired
-    public ActorController(ActorManager actorManager) {
+    public ActorController(ActorService actorManager) {
         this.actorManager = actorManager;
     }
 

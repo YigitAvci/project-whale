@@ -1,6 +1,6 @@
 package com.sloths.movei_review_project.controllers;
 
-import com.sloths.movei_review_project.businesses.MovieManager;
+import com.sloths.movei_review_project.services.MovieService;
 import com.sloths.movei_review_project.entities.Movie;
 import com.sloths.movei_review_project.helpers.responseHelpers.CustomResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +16,10 @@ import javax.validation.Valid;
 @RequestMapping("/movies")
 public class MovieController {
 
-    private final MovieManager movieManager;
+    private final MovieService movieManager;
 
     @Autowired
-    public MovieController(MovieManager movieManager) {
+    public MovieController(MovieService movieManager) {
         this.movieManager = movieManager;
     }
 

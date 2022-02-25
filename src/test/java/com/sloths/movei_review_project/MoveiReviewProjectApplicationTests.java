@@ -1,6 +1,6 @@
 package com.sloths.movei_review_project;
 
-import com.sloths.movei_review_project.businesses.MovieManager;
+import com.sloths.movei_review_project.services.MovieService;
 import com.sloths.movei_review_project.entities.Movie;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,10 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class MoveiReviewProjectApplicationTests {
 
-    private final MovieManager movieManager;
+    private final MovieService movieManager;
 
     @Autowired
-    public MoveiReviewProjectApplicationTests(MovieManager movieManager) {
+    public MoveiReviewProjectApplicationTests(MovieService movieManager) {
         this.movieManager = movieManager;
     }
 

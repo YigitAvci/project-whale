@@ -1,44 +1,58 @@
 package com.sloths.movei_review_project.auth.configs;
 
+import com.sloths.movei_review_project.auth.exceptions.JwtAuthenticationEntryPoint;
+import com.sloths.movei_review_project.auth.filters.JwtRequestFilter;
 import com.sloths.movei_review_project.auth.services.MyUserDetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final MyUserDetailsService myUserDetailsService;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final JwtRequestFilter jwtRequestFilter;
 
-    @Autowired
-    public SecurityConfig(MyUserDetailsService myUserDetailsService, BCryptPasswordEncoder passwordEncoder) {
-        this.myUserDetailsService = myUserDetailsService;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //the order of this chain is important
-        http
-                .authorizeRequests().antMatchers(HttpMethod.POST, "/users/addUser").permitAll() //the parameters that are passed into antMatchers method will be allowed
-                .anyRequest().authenticated() //every request except ones that include "/" and "home" must be authenticated
+        http.
+                csrf().disable()
+                .authorizeRequests().antMatchers("/users/addUser", "/authentication/authenticate").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .formLogin() //form login will be used to authenticate the users and "/login" will be the login page
-                .permitAll() //all the requests which want to reach to login page will be allowed
+                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
                 .and()
-                .csrf().disable();
-//                .logout().permitAll() //and all the requests which want to reach to logout page will be allowed
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(myUserDetailsService).passwordEncoder(passwordEncoder);
+    }
+
+    @Bean
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
     }
 }

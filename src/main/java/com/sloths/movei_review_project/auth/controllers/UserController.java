@@ -1,7 +1,7 @@
-package com.sloths.movei_review_project.controllers;
+package com.sloths.movei_review_project.auth.controllers;
 
 import com.sloths.movei_review_project.auth.entities.User;
-import com.sloths.movei_review_project.businesses.UserManager;
+import com.sloths.movei_review_project.auth.services.UserService;
 import com.sloths.movei_review_project.helpers.responseHelpers.CustomResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserManager userManager;
+    private final UserService userManager;
 
     @Autowired
-    public UserController(UserManager userManager) {
+    public UserController(UserService userManager) {
         this.userManager = userManager;
     }
 

@@ -1,6 +1,6 @@
-package com.sloths.movei_review_project.businesses;
+package com.sloths.movei_review_project.services;
 
-import com.sloths.movei_review_project.dataAccesses.ActorDataAccess;
+import com.sloths.movei_review_project.repositories.ActorRepository;
 import com.sloths.movei_review_project.entities.Actor;
 import com.sloths.movei_review_project.entities.ActorDTO;
 import com.sloths.movei_review_project.helpers.responseHelpers.CustomResponseEntity;
@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ActorManager {
+public class ActorService {
 
-    private final ActorDataAccess actorDataAccess;
+    private final ActorRepository actorDataAccess;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -34,7 +34,7 @@ public class ActorManager {
     }
 
     @Autowired
-    public ActorManager(ActorDataAccess actorDataAccess) {
+    public ActorService(ActorRepository actorDataAccess) {
         this.actorDataAccess = actorDataAccess;
     }
 

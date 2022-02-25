@@ -1,6 +1,6 @@
-package com.sloths.movei_review_project.businesses;
+package com.sloths.movei_review_project.services;
 
-import com.sloths.movei_review_project.dataAccesses.MovieDataAccess;
+import com.sloths.movei_review_project.repositories.MovieRepository;
 import com.sloths.movei_review_project.entities.Actor;
 import com.sloths.movei_review_project.entities.ActorDTO;
 import com.sloths.movei_review_project.entities.Movie;
@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Service
-public class MovieManager {
+public class MovieService {
 
-    private final MovieDataAccess movieDataAccess;
-    private final ActorManager actorManager;
+    private final MovieRepository movieDataAccess;
+    private final ActorService actorManager;
 
     @Autowired
-    public MovieManager (MovieDataAccess movieDataAccess, ActorManager actorManager) {
+    public MovieService(MovieRepository movieDataAccess, ActorService actorManager) {
         this.movieDataAccess = movieDataAccess;
         this.actorManager = actorManager;
     }

@@ -1,7 +1,7 @@
-package com.sloths.movei_review_project.businesses;
+package com.sloths.movei_review_project.auth.services;
 
 import com.sloths.movei_review_project.auth.entities.User;
-import com.sloths.movei_review_project.dataAccesses.UserDataAccess;
+import com.sloths.movei_review_project.auth.repositories.UserRepository;
 import com.sloths.movei_review_project.helpers.responseHelpers.CustomResponseEntity;
 import com.sloths.movei_review_project.helpers.responseHelpers.CustomResponseEntityFail;
 import com.sloths.movei_review_project.helpers.responseHelpers.CustomResponseEntitySuccess;
@@ -10,13 +10,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserManager {
+public class UserService {
 
-    private final UserDataAccess userDataAccess;
+    private final UserRepository userDataAccess;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserManager(UserDataAccess userDataAccess, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userDataAccess, BCryptPasswordEncoder passwordEncoder) {
         this.userDataAccess = userDataAccess;
         this.passwordEncoder = passwordEncoder;
     }

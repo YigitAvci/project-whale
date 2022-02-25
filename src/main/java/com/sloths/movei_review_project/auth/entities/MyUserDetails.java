@@ -1,11 +1,10 @@
-package com.sloths.movei_review_project.auth.helper;
+package com.sloths.movei_review_project.auth.entities;
 
 import com.sloths.movei_review_project.auth.entities.User;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Collection;
