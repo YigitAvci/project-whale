@@ -31,10 +31,10 @@ public class MovieService {
 
     public CustomResponseEntity getById(long id) {
         Movie movieToBeGet = movieDataAccess.getById(id);
-        if(movieToBeGet.getId() == id) {
-            return new CustomResponseEntitySuccess<>(movieDataAccess.getById(id));
+        if(movieToBeGet.getId() != id) {
+            return new CustomResponseEntityFail(String.format("There is no movie which has such an id: [%s]", id));
         }
-        return new CustomResponseEntityFail(String.format("There is no movie which has such an id: [%s]", id));
+        return new CustomResponseEntitySuccess<>(movieDataAccess.getById(id));
     }
 
     public CustomResponseEntity findAll() {
@@ -45,7 +45,6 @@ public class MovieService {
         try {
             Movie movieToBeDeleted = movieDataAccess.getById(id);
             movieDataAccess.deleteById(id);
-            System.out.println("is there any problem until here?");
             return new CustomResponseEntitySuccess<>(movieToBeDeleted, String.format("The movie whose id [%s] is deleted", movieToBeDeleted));
         }catch (EntityNotFoundException e) {
             throw new MovieNotFoundException(id);
@@ -54,8 +53,7 @@ public class MovieService {
 
     public CustomResponseEntity add(Movie movie) {
         List<Actor> actors = movie.getCast().stream().
-                filter(actor -> actor.getId() > 0).
-                filter(actor -> actorManager.isExist(actor.getId())).
+                filter(actor -> actor.getId() > 0 && actorManager.isExist(actor.getId())).
                 map(actor -> actorManager.getActorById(actor.getId())).
                 toList();
         if(!actors.isEmpty()) {
@@ -91,18 +89,18 @@ public class MovieService {
 
     public CustomResponseEntity update(Movie movie) {
         long movieId = movie.getId();
-        if(movieId > 0) {
-            try {
-                Movie movieToBeUpdate = movieDataAccess.getById(movieId);
-                final Movie oldMovie = new Movie(movieToBeUpdate.getId(), movieToBeUpdate.getName(), movieToBeUpdate.getReleaseDate(), movieToBeUpdate.getRate());
-                movieToBeUpdate.setFieldsIfNotNull(movie);
-                movieDataAccess.save(movieToBeUpdate);
-                return new CustomResponseEntitySuccess(String.format("movie: [%s] is updated to movie: [%s]", oldMovie, movieToBeUpdate));
-            }catch (EntityNotFoundException ex) {
-                return new CustomResponseEntityFail(String.format("there is no such a movie whose id: [%d]", movieId));
-            }
+        if(movieId <= 0) {
+            return new CustomResponseEntityFail("update process is not performed");
         }
-        return new CustomResponseEntityFail("update process is not performed");
+        try {
+            Movie movieToBeUpdate = movieDataAccess.getById(movieId);
+            final Movie oldMovie = new Movie(movieToBeUpdate.getId(), movieToBeUpdate.getName(), movieToBeUpdate.getReleaseDate(), movieToBeUpdate.getRate());
+            movieToBeUpdate.setFieldsIfNotNull(movie);
+            movieDataAccess.save(movieToBeUpdate);
+            return new CustomResponseEntitySuccess(String.format("movie: [%s] is updated to movie: [%s]", oldMovie, movieToBeUpdate));
+        }catch (EntityNotFoundException ex) {
+            return new CustomResponseEntityFail(String.format("there is no such a movie whose id: [%d]", movieId));
+        }
     }
 
 

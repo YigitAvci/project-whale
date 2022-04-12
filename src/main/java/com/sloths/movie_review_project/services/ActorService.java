@@ -6,6 +6,7 @@ import com.sloths.movie_review_project.entities.ActorDTO;
 import com.sloths.movie_review_project.helpers.responseHelpers.CustomResponseEntity;
 import com.sloths.movie_review_project.helpers.responseHelpers.CustomResponseEntityFail;
 import com.sloths.movie_review_project.helpers.responseHelpers.CustomResponseEntitySuccess;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class ActorService {
 
     private final ActorRepository actorDataAccess;
@@ -53,21 +55,21 @@ public class ActorService {
 
     public CustomResponseEntity findActorById(long id) {
         CustomResponseEntitySuccess<Actor> responseEntity = new CustomResponseEntitySuccess<>(actorDataAccess.findActorById(id), String.format("the actor whose id is [%s] is found", id));
-        if(responseEntity.getData() != null) {
-            System.out.println(responseEntity.getData().getMovies().size());
-            return responseEntity;
+        if(responseEntity.getData() == null) {
+            return new CustomResponseEntityFail(String.format("the actor whose id is [%s] is not found", id));
         }
-        return new CustomResponseEntityFail(String.format("the actor whose id is [%s] is not found", id));
+        log.info("movie list size is [{}]", responseEntity.getData().getMovies().size());
+        return responseEntity;
     }
 
     public CustomResponseEntity findActorByFullName(String fullName) {
         List<Actor> actorList = actorDataAccess.findActorsByFullName(fullName);
         List<ActorDTO> actorDTOList = actorList.stream().map(ActorDTO::new).collect(Collectors.toList());
         CustomResponseEntitySuccess<List<ActorDTO>> responseEntity = new CustomResponseEntitySuccess<>(actorDTOList, String.format("the actor whose full name is [%s] is found", fullName));
-        if(responseEntity.getData().size() > 0) {
-            return responseEntity;
+        if(responseEntity.getData().size() <= 0) {
+            return new CustomResponseEntityFail(String.format("the actor whose full name is [%s] is not found", fullName));
         }
-        return new CustomResponseEntityFail(String.format("the actor whose full name is [%s] is not found", fullName));
+        return responseEntity;
     }
 
     public List<Actor> findActorByFullNameViaCriteria(String fullName) {
