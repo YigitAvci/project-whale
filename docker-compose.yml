@@ -3,6 +3,7 @@ services:
 
   postgre-db:
     image: postgres
+    platform: linux/amd64
     environment:
       POSTGRES_DB: projectWhaleDb
       POSTGRES_USER: projectWhaleUser
@@ -14,6 +15,7 @@ services:
       - postgreDb-volume:/var/lib/postgresql/data
 
   java-app:
+    platform: linux/amd64
     build: .
     environment:
       datasource-url: jdbc:postgresql://postgreDb:5432/projectWhaleDb
@@ -25,6 +27,7 @@ services:
       - ./target/:/app
     depends_on:
       - postgre-db
+    container_name: javaApp
 
 volumes:
   postgreDb-volume:

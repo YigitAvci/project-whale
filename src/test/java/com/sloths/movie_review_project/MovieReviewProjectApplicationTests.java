@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MoveiReviewProjectApplicationTests {
+class MovieReviewProjectApplicationTests {
 
     private final MovieService movieManager;
 
     @Autowired
-    public MoveiReviewProjectApplicationTests(MovieService movieManager) {
+    public MovieReviewProjectApplicationTests(MovieService movieManager) {
         this.movieManager = movieManager;
     }
 
