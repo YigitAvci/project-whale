@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Entity
 @NoArgsConstructor
@@ -15,6 +16,11 @@ public class User {
     @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Setter
+    @Getter
+    @Column(unique = true, nullable = false)
+    private String email;
 
     @Setter
     @Getter

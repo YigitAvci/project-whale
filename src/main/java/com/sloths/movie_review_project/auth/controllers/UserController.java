@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -22,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping("/addUser")
-    public CustomResponseEntity<User> add(@RequestBody User user) {
+    public CustomResponseEntity<User> add(@RequestBody @NotNull User user) {
         return userManager.add(user);
     }
 

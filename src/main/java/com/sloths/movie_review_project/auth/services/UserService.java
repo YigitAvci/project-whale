@@ -23,8 +23,8 @@ public class UserService {
     }
 
     public CustomResponseEntity add(User user) {
-        if(user == null || !isUsernameProper(user.getUsername()) || !isPasswordProper(user.getPassword())) {
-            return new CustomResponseEntityFail("an error occurred during storing the user! try again, please...");
+        if(!isUsernameProper(user.getUsername()) || !isPasswordProper(user.getPassword())) {
+            return new CustomResponseEntityFail("username or password does not prove the constraints! try again, please...");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return new CustomResponseEntitySuccess<>(userDataAccess.save(user), "user has been saved, successfully!");
