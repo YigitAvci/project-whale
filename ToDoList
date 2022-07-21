@@ -1,0 +1,6 @@
+to do list:
+
+1. learn how you can get the movies related with the actor from external table (many to many relationship) (completed)
+2. spring security database authentication implementation (completed)
+3. jwt authorization implementation (completed)
+4. create a sql script which inserts a default admin record into users table (not completed)

@@ -1,0 +1,31 @@
+version: "3.9"  # optional since v1.27.0
+services:
+
+  postgre-db:
+    image: postgres
+    environment:
+      POSTGRES_DB: projectWhaleDb
+      POSTGRES_USER: projectWhaleUser
+      POSTGRES_PASSWORD: projectWhalePassword
+    ports:
+      - "5432:5432"
+    container_name: postgreDb
+    volumes:
+      - postgreDb-volume:/var/lib/postgresql/data
+
+  java-app:
+    build: .
+    environment:
+      datasource-url: jdbc:postgresql://postgreDb:5432/projectWhaleDb
+      datasource-user: projectWhaleUser
+      datasource-password: projectWhalePassword
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./target/:/app
+    depends_on:
+      - postgre-db
+    container_name: javaApp
+
+volumes:
+  postgreDb-volume:
