@@ -17,7 +17,7 @@ class MovieReviewProjectApplicationTests {
         this.movieManager = movieManager;
     }
 
-    @Test
+    /*@Test
     void contextLoads() {
     }
 
@@ -34,6 +34,6 @@ class MovieReviewProjectApplicationTests {
         Movie movieToBeDeleted = (Movie) movieManager.getById(19).getData();
         String movieName = movieToBeDeleted.getName();
         Assertions.assertThat(movieName).isEqualTo("Troy");
-    }
+    }*/
 
 }
