@@ -37,4 +37,9 @@ public class User {
     @Getter
     @Column(nullable = false)
     private String role;
+
+    @Setter
+    @Getter
+    @Column
+    private String photo;
 }

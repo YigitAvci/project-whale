@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 @PropertySource("h2db-application.properties")
 @EnableTransactionManagement
 @EntityScan(basePackageClasses = {Movie.class, Actor.class})
-public class MovieJPAConfig {
+public class JPAConfig {
 
     @Autowired
     private Environment environment;
