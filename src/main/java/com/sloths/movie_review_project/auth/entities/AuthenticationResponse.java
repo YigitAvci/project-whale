@@ -10,4 +10,5 @@ import java.io.Serializable;
 public class AuthenticationResponse implements Serializable {
 
     private final String token;
+    private final String username;
 }

@@ -33,7 +33,7 @@ public class AuthenticationController {
 
             MyUserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
             String token = jwtUtil.createToken(userDetails);
-            AuthenticationResponse authenticationResponse = new AuthenticationResponse(token);
+            AuthenticationResponse authenticationResponse = new AuthenticationResponse(token, userDetails.getUsername());
             log.info("authentication token is returned: [{}]", authenticationResponse.getToken());
             return new CustomResponseEntitySuccess(authenticationResponse);
 

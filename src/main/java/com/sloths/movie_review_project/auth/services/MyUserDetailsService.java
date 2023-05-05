@@ -20,7 +20,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     public MyUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if(username != null && !username.isEmpty() && !username.isBlank()) {
-            User user = userDataAccess.findByUsername(username);
+            User user = userDataAccess.getByUsername(username);
             return new MyUserDetails(user);
         }
         return null;

@@ -28,7 +28,10 @@ public class UserService {
         if(!isUsernameProper(user.getUsername()) || !isPasswordProper(user.getPassword())) {
             return new CustomResponseEntityFail("username or password does not prove the constraints! try again, please...");
         }
-        //User existingUser = userDataAccess.findByUsername(user.getUsername());
+        Optional<User> existingUser = userDataAccess.findByUsernameOrEmail(user.getUsername(), user.getEmail());
+        if(existingUser.isPresent()) {
+            return new CustomResponseEntityFail("this email or username is already exist!");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return new CustomResponseEntitySuccess<>(userDataAccess.save(user), "user has been saved, successfully!");
     }
