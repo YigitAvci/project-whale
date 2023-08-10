@@ -32,4 +32,11 @@ public class ReviewService {
     public CustomResponseEntity<List<Review>> getByMovieId(long movieId) {
         return new CustomResponseEntitySuccess<>(reviewRepository.getReviewsByMovieId(movieId), String.format("the reviews whose movie id is %d", movieId));
     }
+
+    public CustomResponseEntity update(Review review) {
+        Review reviewToUpdate = reviewRepository.getById(review.getId());
+        reviewToUpdate.setReview(review.getReview());
+        reviewToUpdate.setLastEditDate(new Date());
+        return new CustomResponseEntitySuccess(reviewRepository.save(reviewToUpdate), String.format("the review whose id is %d is edited", reviewToUpdate.getId()));
+    }
 }

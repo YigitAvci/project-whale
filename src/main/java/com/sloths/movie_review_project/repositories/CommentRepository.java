@@ -10,4 +10,5 @@ import java.util.ArrayList;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     ArrayList<Comment> getCommentsByReviewId(long reviewId);
+    Comment getCommentById(long id);
 }

@@ -2,12 +2,14 @@ package com.sloths.movie_review_project.services;
 
 import com.sloths.movie_review_project.entities.Comment;
 import com.sloths.movie_review_project.helpers.responseHelpers.CustomResponseEntity;
+import com.sloths.movie_review_project.helpers.responseHelpers.CustomResponseEntityFail;
 import com.sloths.movie_review_project.helpers.responseHelpers.CustomResponseEntitySuccess;
 import com.sloths.movie_review_project.repositories.CommentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -20,10 +22,14 @@ public class CommentService {
     }
 
     public CustomResponseEntity update(Comment comment) {
-        Comment commentToBeUpdate = commentDataAccess.getById(comment.getId());
+        Optional<Comment> optionalComment = commentDataAccess.findById(comment.getId());
+        if(optionalComment.isEmpty()) {
+            return new CustomResponseEntityFail("the comment doesn't exist!");
+        }
+        Comment commentToBeUpdate = optionalComment.get();
         commentToBeUpdate.setComment(comment.getComment());
         commentToBeUpdate.setLastEditDate(new Date());
-        return new CustomResponseEntitySuccess(commentToBeUpdate, "the comment has been updated, successfully!");
+        return new CustomResponseEntitySuccess(commentDataAccess.save(commentToBeUpdate), "the comment has been updated, successfully!");
     }
 
     public CustomResponseEntity deleteById(long id) {

@@ -3,6 +3,7 @@ package com.sloths.movie_review_project.auth.controllers;
 import com.sloths.movie_review_project.auth.entities.AuthenticationRequest;
 import com.sloths.movie_review_project.auth.entities.AuthenticationResponse;
 import com.sloths.movie_review_project.auth.entities.MyUserDetails;
+import com.sloths.movie_review_project.auth.entities.UserDto;
 import com.sloths.movie_review_project.auth.services.MyUserDetailsService;
 import com.sloths.movie_review_project.auth.utils.JwtUtil;
 import com.sloths.movie_review_project.helpers.responseHelpers.CustomResponseEntity;
@@ -33,7 +34,7 @@ public class AuthenticationController {
 
             MyUserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
             String token = jwtUtil.createToken(userDetails);
-            AuthenticationResponse authenticationResponse = new AuthenticationResponse(token, userDetails.getUsername());
+            AuthenticationResponse authenticationResponse = new AuthenticationResponse(token, new UserDto(userDetails.getId(), userDetails.getUsername()));
             log.info("authentication token is returned: [{}]", authenticationResponse.getToken());
             return new CustomResponseEntitySuccess(authenticationResponse);
 

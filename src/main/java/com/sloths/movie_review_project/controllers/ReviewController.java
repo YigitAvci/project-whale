@@ -31,4 +31,9 @@ public class ReviewController {
     public CustomResponseEntity getByMovieId(@RequestParam long movieId) {
         return reviewManager.getByMovieId(movieId);
     }
+
+    @PutMapping
+    public CustomResponseEntity update(@RequestBody Review review) {
+        return reviewManager.update(review);
+    }
 }
